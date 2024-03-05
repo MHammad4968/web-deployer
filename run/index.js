@@ -18,6 +18,7 @@ const simple_git_1 = __importDefault(require("simple-git"));
 const utils_1 = require("./utils");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
+app.use(express_1.default.json());
 app.post("/deploy", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const repoUrl = req.body.repoUrl;
     const id = (0, utils_1.generate)();
