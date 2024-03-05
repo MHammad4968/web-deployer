@@ -1,9 +1,11 @@
+//importing libraries
 import express from "express";
 import cors from "cors";
-import simpleGit from "simple-git";
-import { generate } from "./utils";
-import { createZip } from "./utils";
 import fs from "fs";
+import simpleGit from "simple-git";
+//importing inbuilt functions
+import { generate } from "./utils";
+import { zipFolder } from "./utils";
 
 const app = express();
 app.use(cors());
@@ -14,7 +16,10 @@ app.post("/deploy", async (req, res) => {
   const id = generate();
   console.log("Cloning from: ", repoUrl);
   await simpleGit().clone(repoUrl, `output/dirs/${id}`);
-  console.log("Cloned to: ", `output/${id}`);
+  zipFolder(`output/dirs/${id}`, `output/zips/${id}.zip`);
+  console.log(`Cloned, zipped to output/zips/${id}.zip`);
+  fs.rmSync(`output/dirs/${id}`, { recursive: true });
+  console.log("Folder deleted");
   res.json({
     id: id,
     url: repoUrl,

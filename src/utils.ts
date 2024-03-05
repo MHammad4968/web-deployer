@@ -12,25 +12,12 @@ export function generate() {
   return id;
 }
 
-function zipFolder(folderPath: string, outputPath: string): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
-    const output = fs.createWriteStream(outputPath);
-    const archive = archiver("zip", {
-      zlib: { level: 0 }, // Set compression level to 0
-    });
-
-    output.on("close", () => {
-      console.log(`${archive.pointer()} total bytes`);
-      console.log("Zip file created successfully");
-      resolve();
-    });
-
-    archive.on("error", (err) => {
-      reject(err);
-    });
-
-    archive.pipe(output);
-    archive.directory(folderPath, false); // Add folder to archive
-    archive.finalize();
+export function zipFolder(source: string, out: string) {
+  const output = fs.createWriteStream(out);
+  const archive = archiver("zip", {
+    zlib: { level: 0 },
   });
+  archive.pipe(output);
+  archive.directory(source, false);
+  archive.finalize();
 }
