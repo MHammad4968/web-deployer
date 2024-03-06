@@ -12,12 +12,12 @@ export function generate() {
   return id;
 }
 
-export function zipFolder(source: string, out: string) {
+export async function zipFolder(source: string, out: string): Promise<void> {
   const output = fs.createWriteStream(out);
   const archive = archiver("zip", {
     zlib: { level: 0 },
   });
   archive.pipe(output);
   archive.directory(source, false);
-  archive.finalize();
+  await archive.finalize();
 }
