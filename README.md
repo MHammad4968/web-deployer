@@ -7,8 +7,8 @@ Learning from @hkirat's video: https://youtu.be/c8_tafixiAs?feature=shared
 
 
 ## Architecture
-## Upload Function: Send a post request to a node server to clone a github repo. A page to do this is included in **./frontend.**
-
+## Upload Service
+Sends a post request to a node server to clone a github repo. A page to do this is included in **./frontend.**
 
 ## Deviations from Harkirat's approach 
 [List will keep getting updated]
