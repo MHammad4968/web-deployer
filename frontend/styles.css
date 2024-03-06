@@ -1,0 +1,51 @@
+body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #1d2b3a;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 500px;
+    padding: 2rem;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.input-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+input[type="text"] {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.25rem 0 0 0.25rem;
+    flex: 1;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #0070f3;
+    color: #fff;
+    border: none;
+    border-radius: 0 0.25rem 0.25rem 0;
+    cursor: pointer;
+}
+
+#deployStatus {
+    margin-top: 1rem;
+    font-size: 1rem;
+}
