@@ -12,10 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.zipFolder = exports.generate = void 0;
+exports.getAllFiles = exports.zipFolder = exports.generate = void 0;
 const maxlen = 6;
 const fs_1 = __importDefault(require("fs"));
 const archiver_1 = __importDefault(require("archiver"));
+const path_1 = __importDefault(require("path"));
 function generate() {
     let id = "";
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -37,3 +38,19 @@ function zipFolder(source, out) {
     });
 }
 exports.zipFolder = zipFolder;
+const getAllFiles = (folderPath) => {
+    let result = [];
+    const allfiles = fs_1.default.readdirSync(folderPath);
+    allfiles.forEach((file) => {
+        const filePath = path_1.default.join(folderPath, file);
+        result.push(filePath);
+        if (fs_1.default.statSync(filePath).isDirectory()) {
+            result = result.concat((0, exports.getAllFiles)(filePath));
+        }
+        else {
+            result.push(filePath);
+        }
+    });
+    return result;
+};
+exports.getAllFiles = getAllFiles;

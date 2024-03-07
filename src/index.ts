@@ -2,6 +2,7 @@
 import express from "express";
 import cors from "cors";
 import fs from "fs";
+import path from "path";
 import { S3 } from "aws-sdk";
 import simpleGit from "simple-git";
 //import util from "util";
@@ -22,7 +23,8 @@ app.post("/deploy", async (req, res) => {
   console.log("Cloning from: ", repoUrl);
   await simpleGit().clone(repoUrl, `output/dirs/${id}`);
   console.log("Cloned to output/dirs/", id);
-
+  const files = getAllFiles(path.join(__dirname, `output/dirs/${id}`));
+  console.log("Files: ", files);
   //await zipFolder(`output/dirs/${id}`, `output/zips/${id}.zip`);
   //console.log(`Cloned, zipped to output/zips/${id}.zip`);
   //fs.rmSync(`output/dirs/${id}`, { recursive: true });
