@@ -1,1 +1,2 @@
-console.log(process.env.accessKeyId);
+require("dotenv").config();
+console.log(process.env.ACCESSKEY);
