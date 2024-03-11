@@ -22,7 +22,7 @@ app.post("/deploy", async (req, res) => {
   await simpleGit().clone(repoUrl, `output/dirs/${id}`);
   console.log("Cloned to output/dirs/", id);
   const files = getAllFiles(path.join(__dirname, `output/dirs/${id}`));
-  //console.log("Files: ", files);
+  console.log("Files: ", files);
   files.forEach(async (file) => {
     await uploadToS3(file.slice(__dirname.length + 1), file);
   });

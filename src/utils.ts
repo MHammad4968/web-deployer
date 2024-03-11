@@ -37,7 +37,6 @@ export const getAllFiles = (folderPath: string) => {
   const allfiles = fs.readdirSync(folderPath);
   allfiles.forEach((file) => {
     const filePath = path.join(folderPath, file);
-    result.push(filePath);
     if (fs.statSync(filePath).isDirectory()) {
       result = result.concat(getAllFiles(filePath));
     } else {
@@ -48,7 +47,7 @@ export const getAllFiles = (folderPath: string) => {
 };
 
 export const uploadToS3 = async (fileName: string, filePath: string) => {
-  console.log("Upload called.");
+  console.log(`Uploading ${fileName}`);
   const fileContent = fs.readFileSync(filePath);
   const response = await s3
     .upload({

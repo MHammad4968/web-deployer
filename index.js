@@ -31,7 +31,7 @@ app.post("/deploy", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     yield (0, simple_git_1.default)().clone(repoUrl, `output/dirs/${id}`);
     console.log("Cloned to output/dirs/", id);
     const files = (0, utils_1.getAllFiles)(path_1.default.join(__dirname, `output/dirs/${id}`));
-    //console.log("Files: ", files);
+    console.log("Files: ", files);
     files.forEach((file) => __awaiter(void 0, void 0, void 0, function* () {
         yield (0, utils_1.uploadToS3)(file.slice(__dirname.length + 1), file);
     }));
