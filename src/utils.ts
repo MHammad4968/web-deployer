@@ -2,6 +2,15 @@ const maxlen = 6;
 import fs from "fs";
 import archiver from "archiver";
 import path from "path";
+import { S3 } from "aws-sdk";
+require("dotenv").config();
+
+const s3 = new S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_KEY,
+});
+
+const awsbucket = process.env.AWS_BUCKET || "webdeploy-beta";
 
 export function generate() {
   let id = "";
@@ -36,4 +45,17 @@ export const getAllFiles = (folderPath: string) => {
     }
   });
   return result;
+};
+
+export const uploadToS3 = async (fileName: string, filePath: string) => {
+  console.log("Upload called.");
+  const fileContent = fs.readFileSync(filePath);
+  const response = await s3
+    .upload({
+      Body: fileContent,
+      Key: fileName,
+      Bucket: awsbucket,
+    })
+    .promise();
+  console.log(response);
 };

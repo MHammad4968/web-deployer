@@ -16,20 +16,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
-const aws_sdk_1 = require("aws-sdk");
 const simple_git_1 = __importDefault(require("simple-git"));
-//import util from "util";
 //importing custom functions
 const utils_1 = require("./utils");
 require("dotenv").config();
+(0, utils_1.uploadToS3)("frontend/index.html", "/Users/hammad_1/Code/web-deployer/frontend/index.html");
+//Main app
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-const s3 = new aws_sdk_1.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
-    endpoint: process.env.AWS_ENDPOINT,
-});
 app.post("/deploy", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const repoUrl = req.body.repoUrl;
     const id = (0, utils_1.generate)();

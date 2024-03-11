@@ -5,18 +5,16 @@ import fs from "fs";
 import path from "path";
 import { S3 } from "aws-sdk";
 import simpleGit from "simple-git";
-//import util from "util";
+
 //importing custom functions
-import { generate, getAllFiles, zipFolder } from "./utils";
+import { generate, getAllFiles, uploadToS3, zipFolder } from "./utils";
 require("dotenv").config();
+
+//Main app
 const app = express();
 app.use(cors());
 app.use(express.json());
-const s3 = new S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_KEY,
-  endpoint: process.env.AWS_ENDPOINT,
-});
+
 app.post("/deploy", async (req, res) => {
   const repoUrl = req.body.repoUrl;
   const id = generate();
@@ -24,11 +22,10 @@ app.post("/deploy", async (req, res) => {
   await simpleGit().clone(repoUrl, `output/dirs/${id}`);
   console.log("Cloned to output/dirs/", id);
   const files = getAllFiles(path.join(__dirname, `output/dirs/${id}`));
-  console.log("Files: ", files);
-  //await zipFolder(`output/dirs/${id}`, `output/zips/${id}.zip`);
-  //console.log(`Cloned, zipped to output/zips/${id}.zip`);
-  //fs.rmSync(`output/dirs/${id}`, { recursive: true });
-  //console.log("Folder deleted");
+  //console.log("Files: ", files);
+  files.forEach(async (file) => {
+    await uploadToS3(file.slice(__dirname.length + 1), file);
+  });
   res.json({
     id: id,
     url: repoUrl,
