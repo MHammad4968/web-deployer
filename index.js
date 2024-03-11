@@ -20,7 +20,6 @@ const simple_git_1 = __importDefault(require("simple-git"));
 //importing custom functions
 const utils_1 = require("./utils");
 require("dotenv").config();
-(0, utils_1.uploadToS3)("frontend/index.html", "/Users/hammad_1/Code/web-deployer/frontend/index.html");
 //Main app
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
@@ -32,11 +31,10 @@ app.post("/deploy", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     yield (0, simple_git_1.default)().clone(repoUrl, `output/dirs/${id}`);
     console.log("Cloned to output/dirs/", id);
     const files = (0, utils_1.getAllFiles)(path_1.default.join(__dirname, `output/dirs/${id}`));
-    console.log("Files: ", files);
-    //await zipFolder(`output/dirs/${id}`, `output/zips/${id}.zip`);
-    //console.log(`Cloned, zipped to output/zips/${id}.zip`);
-    //fs.rmSync(`output/dirs/${id}`, { recursive: true });
-    //console.log("Folder deleted");
+    //console.log("Files: ", files);
+    files.forEach((file) => __awaiter(void 0, void 0, void 0, function* () {
+        yield (0, utils_1.uploadToS3)(file.slice(__dirname.length + 1), file);
+    }));
     res.json({
         id: id,
         url: repoUrl,
