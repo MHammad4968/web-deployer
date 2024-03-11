@@ -100,5 +100,11 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts"],
-  "exclude": ["node_modules", "output", "frontend", "./temp.js"]
+  "exclude": [
+    "node_modules",
+    "output",
+    "frontend",
+    "./temp.js",
+    "./reqhandler.js"
+  ]
 }

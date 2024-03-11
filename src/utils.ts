@@ -14,8 +14,7 @@ const awsbucket = process.env.AWS_BUCKET || "webdeploy-beta";
 
 export function generate() {
   let id = "";
-  const chars =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
   for (let i = 0; i < maxlen; i++) {
     id += chars[Math.floor(Math.random() * chars.length)];
   }
